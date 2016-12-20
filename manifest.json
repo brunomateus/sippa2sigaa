@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+
+    "name": "SIPPA to SIGAA",
+    "description": "Avoid corno's job in the end o semester",
+    "version": "1.0",
+
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+
+    "permissions": [
+      "activeTab",
+      "tabs", "https://sistemas.quixada.ufc.br/sippa/professor_visualizar_turma.jsp"
+    ]
+}
+
