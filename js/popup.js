@@ -1,4 +1,26 @@
+var step = -1;
+
 function carregar_frequencia(e){
+
+    chrome.tabs.executeScript({file: "js/jquery-3.1.1.min.js"}, function(){
+        chrome.tabs.executeScript({file:"js/extract_freq.js"}, function(resultado){
+            var exportar = $("#exportar");
+            exportar.empty();
+            exportar.append("Disciplina " +  resultado[0].disciplina);
+            var table = $("<table></table>").attr("id", "dados_alunos");
+            var dados = resultado[0].dados;
+            for(var i = 0; i < dados.length; i++){
+                var row = $("<tr></tr>").attr("id", dados[i][2]);
+                for(var j = 0; j < dados[i].length; j++){
+                    var cell = $("<td></td>").text(dados[i][j]);
+                    row.append(cell);
+                }
+                table.append(row);
+            }
+            exportar.append(table);
+            step = 2;
+        });
+    });
 }
 
 function carregar_nota(e){
@@ -6,6 +28,8 @@ function carregar_nota(e){
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    step = 1;
+
     var loadFreq = $("#load_freq");
     var loadNota = $("#load_notas");
 
