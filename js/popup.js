@@ -18,6 +18,7 @@ function carregar_frequencia_from_json(resultado){
     exportar.empty();
     exportar.append("Disciplina " +  resultado.disciplina);
     var table = $("<table></table>").attr("id", "dados_alunos");
+
     var dados = resultado.dados;
     for(var i = 0; i < dados.length; i++){
         var row = $("<tr></tr>").attr("id", dados[i]["matricula"]);
@@ -31,7 +32,35 @@ function carregar_frequencia_from_json(resultado){
     step = 2;
 }
 
-function carregar_nota(e){
+function carregar_nota_from_sippa(e){
+    chrome.tabs.executeScript({file: "js/jquery-3.1.1.min.js"}, function(){
+        chrome.tabs.executeScript({file:"js/extract_nota.js"}, function(resultado){
+            carregar_nota_from_json(resultado[0].notas);
+//            chrome.storage.local.set({"dados": resultado[0]}, function(){
+//                console.log("Informações salvas");
+//            });
+        });
+    });
+}
+
+function carregar_nota_from_json(notas){
+    var dados_salvos = chrome.storage.local.get("dados", function(resultado){
+        if(resultado.dados){
+            var dados = resultado.dados.dados
+            for(j in notas){
+                for(i in dados){
+                    if(notas[j]["nome"] == dados[i]["nome"]){
+                        dados[i]["media"] = notas[j]["media"];
+                        break;
+                    }
+                }
+            }
+            carregar_frequencia_from_json(resultado.dados);
+
+        } else {
+            alert("Você precisa carregar a frequência dos alunos antes de executar esse passo");
+        }
+    });
 
 }
 
@@ -51,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if(tab.url == "https://sistemas.quixada.ufc.br/sippa/professor_visualizar_avaliacoes.jsp"){
-            loadNota.on('click', carregar_nota);
+            loadNota.on('click', carregar_nota_from_sippa);
             loadNota.prop('disabled', false);
         } else {
             loadNota.prop('click', true);
