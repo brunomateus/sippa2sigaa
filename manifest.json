@@ -12,7 +12,8 @@
 
     "permissions": [
       "activeTab",
-      "tabs", "https://sistemas.quixada.ufc.br/sippa/professor_visualizar_turma.jsp"
+      "tabs", "https://sistemas.quixada.ufc.br/sippa/professor_visualizar_turma.jsp",
+      "storage"
     ]
 }
 

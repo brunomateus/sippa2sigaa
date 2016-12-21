@@ -1,18 +1,25 @@
-var data = [];
+var disciplina = $("#info").find("h1").text();
+var resultado = {"disciplina": disciplina};
+
+var data = {};
 var tabela_freq = $(".tabela_ver_freq")[0];
+var dados = [];
+var aluno = {"nome": "", "matricula": "", "frequencia": "", "faltas": ""};
+var cabecalho = ["nome", "matricula", "frequencia", "faltas"];
+
 $(tabela_freq).find('tr').each(function(colIndex, c){
-    var cols = [];
-    $(this).find('th, td').each(function(colIndex, c){
+
+    var novo_aluno = JSON.parse(JSON.stringify(aluno));
+    $(this).find('td').each(function(colIndex, c){
         var conteudo = c.innerText;
-        if(conteudo != "Presença" && conteudo != ""){
-            cols.push(c.innerText);
+        if(conteudo != ""){
+            novo_aluno[cabecalho[colIndex - 1]] = conteudo;
         }
     });
-    data.push(cols);
+    dados.push(novo_aluno);
+
 });
-var disciplina = $("#info").find("h1").text();
 
-var resultado = {"dados": data, "disciplina": disciplina};
-
+resultado.dados = dados;
 resultado;
 

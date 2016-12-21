@@ -10,10 +10,10 @@ function carregar_frequencia(e){
             var table = $("<table></table>").attr("id", "dados_alunos");
             var dados = resultado[0].dados;
             for(var i = 0; i < dados.length; i++){
-                var row = $("<tr></tr>").attr("id", dados[i][2]);
-                for(var j = 0; j < dados[i].length; j++){
-                    var cell = $("<td></td>").text(dados[i][j]);
-                    row.append(cell);
+                var row = $("<tr></tr>").attr("id", dados[i]["matricula"]);
+                for(var label in dados[i]){
+                    var cell = $("<td></td>").text(dados[i][label]);
+                    row.prepend(cell);
                 }
                 table.append(row);
             }
