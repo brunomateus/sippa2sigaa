@@ -18,7 +18,8 @@ function carregar_frequencia_from_json(disciplina, frequencias){
     var exportar = $("#exportar");
     exportar.empty();
     exportar.append("Disciplina " +  disciplina);
-    var table = $("<table></table>").attr("id", "dados_alunos");
+    var table = $("<table></table>").attr("id", "dados_alunos").addClass("table table-condensed table-striped table-condensed table-bordered");
+    var tbody = $("<tbody></tbody>");
 
     var dados = frequencias;
     for(var i = 0; i < dados.length; i++){
@@ -27,10 +28,15 @@ function carregar_frequencia_from_json(disciplina, frequencias){
         for(var j in labels){
             var label = labels[j];
             var cell = $("<td></td>").text(dados[i][label]);
+            if(label == "media"){
+                var clas = parseFloat(dados[i][label]) >= 5.0 ? "success" : "danger";
+                cell.addClass(clas);
+            }
             row.append(cell);
         }
-        table.append(row);
+        tbody.append(row);
     }
+    table.append(tbody);
     exportar.append(table);
     step = 2;
 }

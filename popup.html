@@ -11,13 +11,14 @@
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
         font-size: 100%;
+        padding: 10px;
       }
       #status {
         /* avoid an excessively wide status text */
         white-space: pre;
         text-overflow: ellipsis;
         overflow: hidden;
-        max-width: 400px;
+        max-width: 600px;
       }
     </style>
 
@@ -27,19 +28,30 @@
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
+     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
+     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
      <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/popup.js"></script>
   </head>
   <body>
-      <ol>
-          <li> Carregar frequ&ecirc;ncia da disciplina <button disabled="disabled" id="load_freq">Carregar</button></li>
-          <li> Carregar notas da disciplina <button disabled="disabled" id="load_notas">Carregar</button></li>
-          <li> Preencher relat&oacute;rio do Sigaa <button>Carregar</button></li>
-    </ol>
-    <div id="exportar">
-        <p> Dados da Disciplina <span id="disciplina"></span>para exporta&ccedil;&atilde;o</p>
-        <table id="dados_alunos">
-        </table>
+      <div class="panel panel-default">
+             <div class="panel-heading">Passo a passo</div>
+                    <div class="panel-body">
+                        <button disabled="disabled" class="btn btn-default btn-block" id="load_freq"><span class="badge">1</span> Carregar frequ&ecirc;ncia da disciplina </button></li>
+                          <button disabled="disabled" class="btn btn-default btn-block" id="load_notas"><span class="badge">2</span> Carregar notas da disciplina</button></li>
+                          <button class="btn btn-default btn-block"><span class="badge">3</span> Preencher relat&oacute;rio do Sigaa</button></li>
+                   </div>
+           </div>
+    </div>
+
+    <div class="panel panel-default">
+             <div class="panel-heading">Pr&eacute;-visualiza&ccedil;&atilde;o</div>
+                    <div class="panel-body" id="exportar">
+                        <p> Dados da Disciplina <span id="disciplina"></span>para exporta&ccedil;&atilde;o</p>
+                        <table id="dados_alunos">
+                        </table>
+                    </div>
+            </div>
     </div>
   </body>
 </html>
