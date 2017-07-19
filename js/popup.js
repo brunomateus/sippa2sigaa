@@ -1,6 +1,3 @@
-var step = -1;
-
-
 function carregar_frequencia_from_sippa(e){
 
     chrome.tabs.executeScript({file: "js/jquery-3.1.1.min.js"}, function(){
@@ -38,7 +35,6 @@ function carregar_frequencia_from_json(disciplina, frequencias){
     }
     table.append(tbody);
     exportar.append(table);
-    step = 2;
 }
 
 function carregar_nota_from_sippa(e){
@@ -71,11 +67,15 @@ function carregar_nota_from_json(notas){
 
 }
 
+function lancar_nota_sigaa(){
+
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-    step = 1;
 
     var loadFreq = $("#load_freq");
     var loadNota = $("#load_notas");
+    var lancaNota = $("#lanca_notas");
 
     chrome.tabs.getSelected(null, function(tab){
         console.log("Aba selecionada " +  tab.url);
@@ -90,8 +90,16 @@ document.addEventListener('DOMContentLoaded', function () {
             loadNota.on('click', carregar_nota_from_sippa);
             loadNota.prop('disabled', false);
         } else {
-            loadNota.prop('click', true);
+            loadNota.prop('disabled', true);
         }
+
+        if(tab.url == "https://si3.ufc.br/sigaa/ensino/consolidacao/detalhesTurma.jsf"){
+            lancaNota.on('click', lancar_nota_sigaa);
+            lancaNota.prop('disabled', false);
+        } else {
+            lancaNota.prop('disabled', true);
+        }
+
 
     });
 
