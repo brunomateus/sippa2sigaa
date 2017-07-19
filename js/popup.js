@@ -61,7 +61,7 @@ function carregar_nota_from_json(notas){
             carregar_frequencia_from_json(resultado.dados.disciplina, resultado.dados.dados);
 
         } else {
-            alert("Você precisa carregar a frequência dos alunos antes de executar esse passo");
+            alert("Voc\xEA precisa carregar a frequ\xEAncia dos alunos antes de executar esse passo");
         }
     });
 
@@ -71,11 +71,22 @@ function lancar_nota_sigaa(){
 
 }
 
+function limpar(){
+    chrome.storage.local.clear();
+    var exportar = $("#exportar");
+    exportar.empty();
+
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
     var loadFreq = $("#load_freq");
     var loadNota = $("#load_notas");
     var lancaNota = $("#lanca_notas");
+    var limparDados = $("#limpar");
+
+    limparDados.on("click", limpar);
+
 
     chrome.tabs.getSelected(null, function(tab){
         console.log("Aba selecionada " +  tab.url);
@@ -108,7 +119,5 @@ document.addEventListener('DOMContentLoaded', function () {
             carregar_frequencia_from_json(frequencia.dados.disciplina, frequencia.dados.dados);
         }
     });
-
-    console.log(dados_salvos);
 
 });
