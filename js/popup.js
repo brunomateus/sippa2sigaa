@@ -5,26 +5,29 @@ function carregar_frequencia_from_sippa(e){
 
     chrome.tabs.executeScript({file: "js/jquery-3.1.1.min.js"}, function(){
         chrome.tabs.executeScript({file:"js/extract_freq.js"}, function(resultado){
-            carregar_frequencia_from_json(resultado[0]);
-            chrome.storage.local.set({"dados": resultado[0]}, function(){
+            var frequencias = resultado[0];
+            carregar_frequencia_from_json(frequencias.disciplina, frequencias.dados);
+            chrome.storage.local.set({"dados": frequencias}, function(){
                 console.log("Informações salvas");
             });
         });
     });
 }
 
-function carregar_frequencia_from_json(resultado){
+function carregar_frequencia_from_json(disciplina, frequencias){
     var exportar = $("#exportar");
     exportar.empty();
-    exportar.append("Disciplina " +  resultado.disciplina);
+    exportar.append("Disciplina " +  disciplina);
     var table = $("<table></table>").attr("id", "dados_alunos");
 
-    var dados = resultado.dados;
+    var dados = frequencias;
     for(var i = 0; i < dados.length; i++){
         var row = $("<tr></tr>").attr("id", dados[i]["matricula"]);
-        for(var label in dados[i]){
+        var labels = ["matricula", "nome", "faltas", "frequencia", "media"];
+        for(var j in labels){
+            var label = labels[j];
             var cell = $("<td></td>").text(dados[i][label]);
-            row.prepend(cell);
+            row.append(cell);
         }
         table.append(row);
     }
@@ -36,9 +39,6 @@ function carregar_nota_from_sippa(e){
     chrome.tabs.executeScript({file: "js/jquery-3.1.1.min.js"}, function(){
         chrome.tabs.executeScript({file:"js/extract_nota.js"}, function(resultado){
             carregar_nota_from_json(resultado[0].notas);
-//            chrome.storage.local.set({"dados": resultado[0]}, function(){
-//                console.log("Informações salvas");
-//            });
         });
     });
 }
@@ -47,15 +47,16 @@ function carregar_nota_from_json(notas){
     var dados_salvos = chrome.storage.local.get("dados", function(resultado){
         if(resultado.dados){
             var dados = resultado.dados.dados
-            for(j in notas){
-                for(i in dados){
+            dados[0].media = "M\xE9dia";
+            for(var j in notas){
+                for(var i in dados){
                     if(notas[j]["nome"] == dados[i]["nome"]){
                         dados[i]["media"] = notas[j]["media"];
                         break;
                     }
                 }
             }
-            carregar_frequencia_from_json(resultado.dados);
+            carregar_frequencia_from_json(resultado.dados.disciplina, resultado.dados.dados);
 
         } else {
             alert("Você precisa carregar a frequência dos alunos antes de executar esse passo");
@@ -88,10 +89,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    var dados_salvos = chrome.storage.local.get("dados", function(resultado){
-        if(resultado.dados){
-            carregar_frequencia_from_json(resultado.dados);
+    var dados_salvos = chrome.storage.local.get("dados", function(frequencia){
+        if(frequencia.dados){
+            carregar_frequencia_from_json(frequencia.dados.disciplina, frequencia.dados.dados);
         }
     });
+
+    console.log(dados_salvos);
 
 });
