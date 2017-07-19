@@ -24,6 +24,6 @@ $(tabela_freq).find('tr').each(function(colIndex, c){
 
 var disciplina = $("#info").find("h1").text();
 resultado.disciplina = disciplina;
-resultado.dados =  dados;
+resultado.alunos =  dados;
 resultado;
 

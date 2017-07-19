@@ -2,11 +2,8 @@ function carregar_frequencia_from_sippa(e){
 
     chrome.tabs.executeScript({file: "js/jquery-3.1.1.min.js"}, function(){
         chrome.tabs.executeScript({file:"js/extract_freq.js"}, function(resultado){
-            var frequencias = resultado[0];
-            carregar_frequencia_from_json(frequencias.disciplina, frequencias.dados);
-            chrome.storage.local.set({"dados": frequencias}, function(){
-                console.log("Informações salvas");
-            });
+            var informacoes = resultado[0];
+            carregar_frequencia_from_json(informacoes.disciplina, informacoes.alunos);
         });
     });
 }
@@ -35,6 +32,11 @@ function carregar_frequencia_from_json(disciplina, frequencias){
     }
     table.append(tbody);
     exportar.append(table);
+
+    chrome.storage.local.set({"informacoes": {"disciplina": disciplina, "alunos": frequencias}}, function(){
+        console.log("Informações salvas");
+    });
+
 }
 
 function carregar_nota_from_sippa(e){
@@ -46,9 +48,9 @@ function carregar_nota_from_sippa(e){
 }
 
 function carregar_nota_from_json(notas){
-    var dados_salvos = chrome.storage.local.get("dados", function(resultado){
-        if(resultado.dados){
-            var dados = resultado.dados.dados
+    var dados_salvos = chrome.storage.local.get("informacoes", function(recuperadas){
+        if(recuperadas.informacoes){
+            var dados = recuperadas.informacoes.alunos;
             dados[0].media = "M\xE9dia";
             for(var j in notas){
                 for(var i in dados){
@@ -58,7 +60,7 @@ function carregar_nota_from_json(notas){
                     }
                 }
             }
-            carregar_frequencia_from_json(resultado.dados.disciplina, resultado.dados.dados);
+            carregar_frequencia_from_json(recuperadas.informacoes.disciplina, recuperadas.informacoes.alunos);
 
         } else {
             alert("Voc\xEA precisa carregar a frequ\xEAncia dos alunos antes de executar esse passo");
@@ -114,9 +116,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    var dados_salvos = chrome.storage.local.get("dados", function(frequencia){
-        if(frequencia.dados){
-            carregar_frequencia_from_json(frequencia.dados.disciplina, frequencia.dados.dados);
+    var dados_salvos = chrome.storage.local.get("informacoes", function(recuperadas){
+        if(recuperadas.informacoes){
+            carregar_frequencia_from_json(recuperadas.informacoes.disciplina, recuperadas.informacoes.alunos);
         }
     });
 
