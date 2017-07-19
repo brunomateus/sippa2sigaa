@@ -4,6 +4,7 @@ function carregar_frequencia_from_sippa(e){
         chrome.tabs.executeScript({file:"js/extract_freq.js"}, function(resultado){
             var informacoes = resultado[0];
             carregar_frequencia_from_json(informacoes.disciplina, informacoes.alunos);
+            $("#feedback").text("Informa\xE7\xF5es de frequ\xEAncias carregadas com sucesso").removeClass("hidden").addClass("visible");
         });
     });
 }
@@ -43,6 +44,9 @@ function carregar_nota_from_sippa(e){
     chrome.tabs.executeScript({file: "js/jquery-3.1.1.min.js"}, function(){
         chrome.tabs.executeScript({file:"js/extract_nota.js"}, function(resultado){
             carregar_nota_from_json(resultado[0].notas);
+            $("#feedback").text("Informa\xE7\xF5es de notas carregadas com sucesso").removeClass("hidden").addClass("visible");
+
+
         });
     });
 }
