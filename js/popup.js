@@ -73,9 +73,26 @@ function carregar_nota_from_json(notas){
 
 }
 
-function lancar_nota_sigaa(){
+function habilitarLogin(){
+
+    var habilitar = function(){
+        var inputLogin = document.getElementsByName("user.login")[0];
+        inputLogin.removeAttribute("disabled", "");
+
+    var inputSenha = document.getElementsByName("user.senha")[0];
+        inputSenha.removeAttribute("disabled", "");
+
+        var entrar = document.getElementsByName("entrar")[0];
+        entrar.removeAttribute("disabled", "");
+
+    };
+
+    chrome.tabs.executeScript({code: "("+habilitar.toString()+")();"}, function(resultado){
+        console.log("Login habilitado");
+    });
 
 }
+
 
 function limpar(){
     chrome.storage.local.clear();
@@ -94,7 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
     limparDados.on("click", limpar);
 
 
-    chrome.tabs.getSelected(null, function(tab){
+    chrome.tabs.query({active: true}, function(tabs){
+        var tab = tabs[0];
         console.log("Aba selecionada " +  tab.url);
         if(tab.url == "https://sistemas.quixada.ufc.br/sippa/professor_visualizar_turma.jsp"){
             loadFreq.on('click', carregar_frequencia_from_sippa);
@@ -115,6 +133,10 @@ document.addEventListener('DOMContentLoaded', function () {
             lancaNota.prop('disabled', false);
         } else {
             lancaNota.prop('disabled', true);
+        }
+
+        if(tab.url == "https://si3.ufc.br/sigaa/verTelaLogin.do"){
+            habilitarLogin();
         }
 
 
