@@ -93,6 +93,27 @@ function habilitarLogin(){
 
 }
 
+function lancar_nota_sigaa(){
+
+/*    var lancarNotas = function(){
+
+        var tabelaNotas = document.getElementById("notas-turma");
+        var body = tabelaNotas.getElementsByTagName("tbody")[0];
+        var linhas = body.getElementsByTagName("tr");
+        for(var i = 0; i < linhas.length; i++){
+            var matricula = linhas[i].childNodes[1].nodeValue;
+            console.log(matricula);
+        }
+
+    };*/
+
+ //   chrome.tabs.executeScript({code:"("+ lancarNotas.toString() +")();"}, function(resultado){
+    chrome.tabs.executeScript({file:"js/lancar_notas.js"}, function(resultado){
+
+        $("#feedback").text("Notas lan\xE7adas com sucesso").removeClass("hidden").addClass("visible");
+    });
+
+}
 
 function limpar(){
     chrome.storage.local.clear();
