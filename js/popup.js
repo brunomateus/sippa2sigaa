@@ -35,7 +35,6 @@ function carregar_frequencia_from_json(disciplina, frequencias){
     exportar.append(table);
 
     chrome.storage.local.set({"informacoes": {"disciplina": disciplina, "alunos": frequencias}}, function(){
-        console.log("Informações salvas");
     });
 
 }
@@ -90,28 +89,13 @@ function habilitarLogin(){
     };
 
     chrome.tabs.executeScript({code: "("+habilitar.toString()+")();"}, function(resultado){
-        console.log("Login habilitado");
     });
 
 }
 
 function lancar_nota_sigaa(){
 
-/*    var lancarNotas = function(){
-
-        var tabelaNotas = document.getElementById("notas-turma");
-        var body = tabelaNotas.getElementsByTagName("tbody")[0];
-        var linhas = body.getElementsByTagName("tr");
-        for(var i = 0; i < linhas.length; i++){
-            var matricula = linhas[i].childNodes[1].nodeValue;
-            console.log(matricula);
-        }
-
-    };*/
-
- //   chrome.tabs.executeScript({code:"("+ lancarNotas.toString() +")();"}, function(resultado){
     chrome.tabs.executeScript({file:"js/lancar_notas.js"}, function(resultado){
-
         $("#feedback").text("Notas lan\xE7adas com sucesso").removeClass("hidden").addClass("visible");
     });
 
@@ -136,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     chrome.tabs.query({active: true}, function(tabs){
         var tab = tabs[0];
-        console.log("Aba selecionada " +  tab.url);
         if(tab.url == "https://sistemas.quixada.ufc.br/sippa/professor_visualizar_turma.jsp"){
             loadFreq.on('click', carregar_frequencia_from_sippa);
             loadFreq.prop('disabled', false);

@@ -9,7 +9,6 @@ chrome.storage.local.get("informacoes", function(recuperadas){
         for(var j = 0; j < dadosSalvos.alunos.length; j++){
 
             var aluno = dadosSalvos.alunos[j];
-            console.log(matricula, aluno.matricula);
 
             if(matricula == aluno.matricula){
                 var nota1 = linhas[i].childNodes[5].childNodes[1];
