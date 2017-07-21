@@ -12,14 +12,20 @@ chrome.storage.local.get("informacoes", function(recuperadas){
             console.log(matricula, aluno.matricula);
 
             if(matricula == aluno.matricula){
-                var nota1 = linhas[i].childNodes[5];
-                var nota2 = linhas[i].childNodes[7];
-                var frequencia = linhas[i].childNodes[17];
+                var nota1 = linhas[i].childNodes[5].childNodes[1];
+                var nota2 = linhas[i].childNodes[7].childNodes[1];
+                var af = linhas[i].childNodes[11].childNodes[1];
 
+                var frequencia = linhas[i].childNodes[21].childNodes[1];
 
-                nota1.childNodes[1].value= aluno.media;
-                nota2.childNodes[1].value= aluno.media;
-//                frequencia.childNodes[1].value=20;
+                nota1.setAttribute("value", aluno.mp);
+                nota2.setAttribute("value", aluno.mp);
+
+                if(aluno.af){
+                    af.setAttribute("value", aluno.af);
+                }
+
+                frequencia.setAttribute("value", aluno.faltas);
 
                 break;
             }
