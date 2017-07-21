@@ -4,7 +4,7 @@ var tabela_freq = $(".tabela_ver_freq tbody")[0];
 var aluno = {"nome": "", "matricula": "", "frequencia": "", "faltas": ""};
 var cabecalho = ["nome", "matricula", "frequencia", "faltas"];
 
-dados.push(JSON.parse(JSON.stringify({"nome": "Nome", "matricula": "Matrícula", "frequencia": "Frequência(%)", "faltas": "Faltas em Horas", "media": "Média"})));
+dados.push(JSON.parse(JSON.stringify({"nome": "Nome", "matricula": "Matrícula", "frequencia": "Frequência(%)", "faltas": "Faltas em Horas", "media": "Média", "af": "Avaliação Final"})));
 
 
 $(tabela_freq).find('tr').each(function(colIndex, c){

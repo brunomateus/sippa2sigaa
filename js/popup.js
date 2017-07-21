@@ -19,7 +19,7 @@ function carregar_frequencia_from_json(disciplina, frequencias){
     var dados = frequencias;
     for(var i = 0; i < dados.length; i++){
         var row = $("<tr></tr>").attr("id", dados[i]["matricula"]);
-        var labels = ["matricula", "nome", "faltas", "frequencia", "media"];
+        var labels = ["matricula", "nome", "faltas", "frequencia", "af", "media"];
         for(var j in labels){
             var label = labels[j];
             var cell = $("<td></td>").text(dados[i][label]);
@@ -60,6 +60,7 @@ function carregar_nota_from_json(notas){
                 for(var i in dados){
                     if(notas[j]["nome"] == dados[i]["nome"]){
                         dados[i]["media"] = notas[j]["media"];
+                        dados[i]["af"] = notas[j]["af"];
                         break;
                     }
                 }
