@@ -9,9 +9,22 @@ $(tabela_freq).find('tr').each(function(colIndex, c){
     var nomeNode = $(this).children(".tab-esquerda");
     if(nomeNode){
         novo_aluno["nome"] = nomeNode.text().trim();
-        novo_aluno["media"] = $(this).children("td:last").text().replace(",", ".").trim();
-        novo_aluno["af"] = $(this).children("td:nth-last-child(2)").children("input").val();
-        novo_aluno["mp"] = novo_aluno["af"] == "" ? novo_aluno["media"] : (2*parseFloat(novo_aluno["media"]) - parseFloat(novo_aluno["af"])).toFixed(2);
+        var media = parseFloat($(this).children("td:last").text().replace(",", ".").trim());
+        if (isNaN(media)) {
+            media = 0;
+        }
+        var af = $(this).children("td:nth-last-child(2)").children("input").val();
+
+        var mp = media;
+        if(af != ""){
+            af  = parseFloat(af).toFixed(1);
+            mp = (2*(media) - af).toFixed(1);
+        }
+
+        novo_aluno["af"] = (af + "").replace(".", ",");
+        novo_aluno["mp"] = (mp + "").replace(".", ",");
+        novo_aluno["media"] = (media.toFixed(1) + "").replace(".", ",");
+
         dados.push(novo_aluno);
     }
 

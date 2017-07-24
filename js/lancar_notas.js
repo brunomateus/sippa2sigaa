@@ -21,6 +21,7 @@ chrome.storage.local.get("informacoes", function(recuperadas){
                 nota2.setAttribute("value", aluno.mp);
 
                 if(aluno.af){
+                    af.removeAttribute("disabled");
                     af.setAttribute("value", aluno.af);
                 }
 
